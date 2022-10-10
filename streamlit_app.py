@@ -51,6 +51,22 @@ def app_sign_in():
 
     return sp
 
+def authorize():
+    oauth = SpotifyOAuth(scope=scope,
+                         redirect_uri=REDIRECT_URI,
+                         client_id=CLIENT_ID,
+                         client_secret=CLIENT_SECRET)
+
+    auth_url = oauth.get_authorize_url()
+
+    link_html = " <a target=\"_self\" href=\"{url}\" >{msg}</a> ".format(
+        url=auth_url,
+        msg="Click me to authenticate!"
+    )
+
+    if not st.session_state["signed_in"]:
+        st.markdown(link_html, unsafe_allow_html=True)
+
 
 st.set_page_config(
     page_title = "Topify",
@@ -96,20 +112,7 @@ if sliders:
         sp = app_sign_in()
     # otherwise, prompt for redirect
     else:
-        oauth = SpotifyOAuth(scope=scope,
-                             redirect_uri=REDIRECT_URI,
-                             client_id=CLIENT_ID,
-                             client_secret=CLIENT_SECRET)
-
-        auth_url = oauth.get_authorize_url()
-
-        link_html = " <a target=\"_self\" href=\"{url}\" >{msg}</a> ".format(
-            url=auth_url,
-            msg="Click me to authenticate!"
-        )
-
-        if not st.session_state["signed_in"]:
-            st.markdown(link_html, unsafe_allow_html=True)
+        authorize()
 
     if st.session_state["signed_in"]:
         user = sp.current_user()

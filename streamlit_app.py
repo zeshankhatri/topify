@@ -1,6 +1,8 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
 import random, string
 from urllib.parse import urlparse, parse_qs
 import requests
@@ -31,18 +33,32 @@ if sliders:
     scope = "user-library-read"
     state = generate_random_string(16)
 
-    authorized = requests.get(authorize_url, {
-        'client_id' : CLIENT_ID,
-        'response_type' : 'code',
-        'redirect_uri' : REDIRECT_URI,
-        'state' : state,
-        'scope' : scope,
-        'show_dialog' : 'true',
-    })
+    oauth = SpotifyOAuth(scope=scope,
+                         redirect_uri=REDIRECT_URI,
+                         client_id=CLIENT_ID,
+                         client_secret=CLIENT_SECRET)
+
+    auth_url = oauth.get_authorize_url()
+
+    link_html = " <a target=\"_self\" href=\"{url}\" >{msg}</a> ".format(
+        url=auth_url,
+        msg="Click me to authenticate!"
+    )
+
+    st.markdown(link_html, unsafe_allow_html=True)
+
+    # authorized = requests.get(authorize_url, {
+    #     'client_id' : CLIENT_ID,
+    #     'response_type' : 'code',
+    #     'redirect_uri' : REDIRECT_URI,
+    #     'state' : state,
+    #     'scope' : scope,
+    #     'show_dialog' : 'true',
+    # })
 
     # authorized_data = parse_qs(urlparse(authorized).query)
 
-    st.write(authorized)
+    # st.write(authorized)
 
     # sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 

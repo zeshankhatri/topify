@@ -61,9 +61,9 @@ st.set_page_config(
     }
 )
 
-CLIENT_ID = 'd689aa7f3a65442ab087d091b5524228'
-CLIENT_SECRET = 'bb0aa730336444dc85919456711052ee'
-REDIRECT_URI = 'https://localhost:8888/callback'
+CLIENT_ID = st.secrets['CLIENT_ID']
+CLIENT_SECRET = st.secrets['CLIENT_SECRET']
+REDIRECT_URI = st.secrets['REDIRECT_URI']
 
 if "signed_in" not in st.session_state:
     st.session_state["signed_in"] = False

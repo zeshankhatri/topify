@@ -107,6 +107,7 @@ if sliders:
     # if no token, but code in url, get code, parse token, and sign in
     elif "code" in url_params:
         # all params stored as lists, see doc for explanation
+        st.write(url_params["code"])
         st.session_state["code"] = url_params["code"][0]
         app_get_token()
         sp = app_sign_in()

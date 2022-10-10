@@ -57,6 +57,8 @@ def authorize():
                          client_id=CLIENT_ID,
                          client_secret=CLIENT_SECRET)
 
+    st.session_state["oauth"] = oauth
+
     auth_url = oauth.get_authorize_url()
 
     link_html = " <a target=\"_self\" href=\"{url}\" >{msg}</a> ".format(
@@ -107,7 +109,6 @@ if sliders:
     # if no token, but code in url, get code, parse token, and sign in
     elif "code" in url_params:
         # all params stored as lists, see doc for explanation
-        st.write(url_params)
         st.session_state["code"] = url_params["code"][0]
         app_get_token()
         sp = app_sign_in()

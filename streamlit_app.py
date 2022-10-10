@@ -4,7 +4,7 @@ import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import random, string
-from urllib.parse import urlparse, parse_qs
+import os
 import requests
 
 def generate_random_string(length):

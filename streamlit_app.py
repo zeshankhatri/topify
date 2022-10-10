@@ -163,8 +163,8 @@ if sliders:
 
     # sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 
-    results = sp.current_user_saved_tracks()
-    st.success("It works!")
-    for idx, item in enumerate(results['items']):
-        track = item['track']
-        st.write(f"{idx + 1} {track['artists'][0]['name']} - {track['name']}")
+        results = sp.current_user_saved_tracks()
+        st.success("It works!")
+        for idx, item in enumerate(results['items']):
+            track = item['track']
+            st.write(f"{idx + 1} {track['artists'][0]['name']} - {track['name']}")

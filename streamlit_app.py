@@ -151,7 +151,7 @@ if sliders:
     else:
         code = url_params['code'][0]
         token = get_token(oauth, code)
-        sign_in(token)
+        sp = sign_in(token)
 
         user = sp.current_user()
         name = user["display_name"]

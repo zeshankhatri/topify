@@ -147,7 +147,7 @@ if sliders:
         msg="Click me to authenticate!"
     )
 
-    st.markdown(link_html)
+    st.markdown(link_html, unsafe_allow_html=True)
 
 
 

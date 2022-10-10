@@ -94,14 +94,11 @@ REDIRECT_URI = st.secrets['REDIRECT_URI']
 
 url_params = st.experimental_get_query_params()
 
-st.write(url_params)
-
 st.write("Hello. Testing")
 
 sliders = st.checkbox("Sliders")
 
 if sliders:
-    authorize_url = 'https://accounts.spotify.com/authorize'
     scope = "user-library-read"
     state = generate_random_string(16)
 
@@ -148,6 +145,19 @@ if sliders:
     )
 
     st.markdown(link_html, unsafe_allow_html=True)
+
+    if 'code' not in url_params:
+        st.error("Please Reauntheticate")
+    else:
+        code = url_params['code'][0]
+        token = get_token(oauth, code)
+        sign_in(token)
+
+        user = sp.current_user()
+        name = user["display_name"]
+        username = user["id"]
+
+        st.write("CUrrent user is: {n}".format(n=name))
 
 
 

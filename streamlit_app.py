@@ -141,9 +141,8 @@ if sliders:
                          client_secret=CLIENT_SECRET)
 
     auth_url = oauth.get_authorize_url()
-    st.write(auth_url)
 
-    link_html = " <a target=\"_self\" href=\"{url}\" >{msg}</a> ".format(
+    link_html = " <a href=\"{url}\" >{msg}</a> ".format(
         url=auth_url,
         msg="Click me to authenticate!"
     )

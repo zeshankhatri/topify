@@ -46,7 +46,7 @@ def app_sign_in():
         st.write(e)
     else:
         st.session_state["signed_in"] = True
-        app_display_welcome()
+        authorize()
         st.success("Sign in success!")
 
     return sp

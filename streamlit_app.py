@@ -86,5 +86,5 @@ if sliders:
         st.success("It works!")
         for idx, item in enumerate(results['items']):
             track = item['name']
-            artist = item['artists'][0]
+            artist = item['artists'][0]['name']
             st.write(f"{idx + 1} {track} - {artist}")

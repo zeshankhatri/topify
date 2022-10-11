@@ -88,4 +88,4 @@ if sliders:
         for idx, item in enumerate(results['items']):
             track = item['name']
             artist = item['artists'][0]['name']
-            st.text("%i %100s %50s" % (idx+1, track, artist))
+            st.text("%i %-50s %-50s" % (idx+1, track, artist))

@@ -88,4 +88,4 @@ if sliders:
         for idx, item in enumerate(results['items']):
             track = item['name']
             artist = item['artists'][0]['name']
-            st.text(f"{idx + 1}\t{track}\t\t{artist}")
+            st.text(f"{idx + 1}\t{track:<20w}\t\t{artist:<20}")

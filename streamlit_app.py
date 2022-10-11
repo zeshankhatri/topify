@@ -84,8 +84,8 @@ if sliders:
         )
 
         st.success("It works!")
-        st.text(f"No.\tSong\t\t\t\tArtist")
+        st.text(f"No.\tSong\t\t\t\t\t\tArtist")
         for idx, item in enumerate(results['items']):
             track = item['name']
             artist = item['artists'][0]['name']
-            st.text("%i %-50s %-50s" % (idx+1, track, artist))
+            st.text("%i\t%-50s %-50s" % (idx+1, track, artist))

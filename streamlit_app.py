@@ -82,8 +82,9 @@ if sliders:
             limit=10,
             time_range='short_term'
         )
+
         st.success("It works!")
-        st.write(results)
-        # for idx, item in enumerate(results['items']):
-        #     track = item['track']
-        #     st.write(f"{idx + 1} {track['artists'][0]['name']} - {track['name']}")
+        for idx, item in enumerate(results['items']):
+            track = item['name']
+            artist = item['artists'][0]
+            st.write(f"{idx + 1} {track} - {artist}")

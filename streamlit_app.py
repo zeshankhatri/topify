@@ -47,7 +47,7 @@ st.write("Hello. Testing")
 sliders = st.checkbox("Sliders")
 
 if sliders:
-    scope = "user-library-read"
+    scope = "user-library-read user-top-read"
     state = generate_random_string(16)
 
     oauth = SpotifyOAuth(scope=scope,

@@ -84,7 +84,8 @@ if sliders:
         )
 
         st.success("It works!")
+        st.text(f"No.\tSong\t\t\tArtist")
         for idx, item in enumerate(results['items']):
             track = item['name']
             artist = item['artists'][0]['name']
-            st.text(f"{idx + 1}\t{track}\t{artist}")
+            st.text(f"{idx + 1}\t{track}\t\t\t{artist}")

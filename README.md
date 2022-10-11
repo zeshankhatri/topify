@@ -1,6 +1,7 @@
 # Topify
 
-Streamlit app to display given Spotify user's top artists or tracks during specified "length".
+Streamlit app to display given Spotify user's top artists or tracks during specified "length". 
+
 Link: https://share.streamlit.io/zeshankhatri/topify/master
 
 - [ ] 1. At least 1 interactive table (https://docs.streamlit.io/library/api-reference/data/st.dataframe (Links to an external site.))

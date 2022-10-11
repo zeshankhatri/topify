@@ -28,6 +28,7 @@ def sign_in(token):
 
 st.set_page_config(
     page_title = "Topify",
+    page_icon='assets/Spotify_Icon_RGB_Green.png',
     layout="wide",
     menu_items = {
         'Get Help' : 'https://docs.streamlit.io/',

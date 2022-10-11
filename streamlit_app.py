@@ -66,7 +66,7 @@ if sliders:
     st.markdown(link_html, unsafe_allow_html=True)
 
     if 'code' not in url_params:
-        st.error("Please Reauntheticate")
+        st.error("Please Reauthenticate")
     else:
         code = url_params['code'][0]
         token = get_token(oauth, code)
@@ -78,12 +78,12 @@ if sliders:
 
         st.write("Current user is: {n}".format(n=name))
 
-
-
-    # sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
-
-        results = sp.current_user_saved_tracks()
+        results = sp.current_user_top_tracks(
+            limit=10,
+            time_range='short_term'
+        )
         st.success("It works!")
-        for idx, item in enumerate(results['items']):
-            track = item['track']
-            st.write(f"{idx + 1} {track['artists'][0]['name']} - {track['name']}")
+        st.write(results)
+        # for idx, item in enumerate(results['items']):
+        #     track = item['track']
+        #     st.write(f"{idx + 1} {track['artists'][0]['name']} - {track['name']}")

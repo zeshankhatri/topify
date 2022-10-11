@@ -44,7 +44,7 @@ url_params = st.experimental_get_query_params()
 
 st.write("Hello. Testing")
 
-sliders = st.checkbox("Sliders")
+sliders = st.checkbox("Test Me!")
 
 if sliders:
     scope = "user-library-read user-top-read"
@@ -87,4 +87,4 @@ if sliders:
         for idx, item in enumerate(results['items']):
             track = item['name']
             artist = item['artists'][0]['name']
-            st.write(f"{idx + 1} {track} - {artist}")
+            st.write(f"{idx + 1} \t {track} \t {artist}")

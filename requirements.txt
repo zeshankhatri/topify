@@ -3,4 +3,4 @@ numpy==1.22.3
 pandas==1.4.2
 requests==2.27.1
 spotipy==2.20.0
-streamlit==1.8.1
+streamlit==1.13.1

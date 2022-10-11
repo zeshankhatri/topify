@@ -128,6 +128,7 @@ else:
     link_html += "</a>"
 
     st.markdown(link_html, unsafe_allow_html=True)
+    st.text(link_html)
 
 sliders = st.checkbox("Test Me!")
 

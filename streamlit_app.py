@@ -119,7 +119,7 @@ else:
     link_html += "    right: 0;"
     link_html += "  }"
     link_html += "</style>"
-    link_html = " <a href=\"{url}\" > ".format(
+    link_html += " <a href=\"{url}\" > ".format(
         url=auth_url,
     )
     link_html += "<button>"

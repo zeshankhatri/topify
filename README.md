@@ -1,7 +1,7 @@
 # Topify
 
 Streamlit app to display given Spotify user's top artists or tracks during specified "length".
-Link: https://zeshankhatri-topify-streamlit-app-psddri.streamlitapp.com/
+Link: https://share.streamlit.io/zeshankhatri/topify/master
 
 - [ ] 1. At least 1 interactive table (https://docs.streamlit.io/library/api-reference/data/st.dataframe (Links to an external site.))
 - [ ] 2. At least 2 chart elements,  such as line, area or bar charts (matplotlib is allowed). To display:

@@ -107,18 +107,26 @@ else:
         long_term = st.button("Long Term")
 
         if short_term:
-            time_range = 'short_term'
+            # Get top tracks during given term
+            results = sp.current_user_top_tracks(
+                limit=10,
+                time_range='short_term'
+            )
+
+            st.text(f"No.\tSong\t\t\t\t\t\tArtist")
+            for idx, item in enumerate(results['items']):
+                track = item['name']
+                artist = item['artists'][0]['name']
+                st.text("%i\t%-47s %-50s" % (idx + 1, track, artist))  # st.text used as st.write doesn't support \t
         if long_term:
-            time_range = 'long term'
+            # Get top tracks during given term
+            results = sp.current_user_top_tracks(
+                limit=10,
+                time_range='long_term'
+            )
 
-        # Get top tracks during given term
-        results = sp.current_user_top_tracks(
-            limit=10,
-            time_range=time_range
-        )
-
-        st.text(f"No.\tSong\t\t\t\t\t\tArtist")
-        for idx, item in enumerate(results['items']):
-            track = item['name']
-            artist = item['artists'][0]['name']
-            st.text("%i\t%-47s %-50s" % (idx + 1, track, artist))  # st.text used as st.write doesn't support \t
+            st.text(f"No.\tSong\t\t\t\t\t\tArtist")
+            for idx, item in enumerate(results['items']):
+                track = item['name']
+                artist = item['artists'][0]['name']
+                st.text("%i\t%-47s %-50s" % (idx + 1, track, artist))  # st.text used as st.write doesn't support \t

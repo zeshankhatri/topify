@@ -18,7 +18,7 @@ def generate_random_string(length):
 
 # Makes POST request to get authorization token
 def get_token(oauth, code):
-    token = oauth.get_access_token(code, as_dict=False, check_cache=False)
+    token = oauth.get_access_token(code, as_dict=False)
     # remove cached token saved in directory
     os.remove(".cache")
 

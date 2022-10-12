@@ -101,14 +101,22 @@ else:
 
         st.write("Current user is: {n}".format(n=name))
 
+        # Display top tracks with artist
+        st.success("It works!")
+        short_term = st.button("Short Term")
+        long_term = st.button("Long Term")
+
+        if short_term:
+            time_range = 'short_term'
+        if long_term:
+            time_range = 'long term'
+
         # Get top tracks during given term
         results = sp.current_user_top_tracks(
             limit=10,
-            time_range='short_term'
+            time_range=time_range
         )
 
-        # Display top tracks with artist
-        st.success("It works!")
         st.text(f"No.\tSong\t\t\t\t\t\tArtist")
         for idx, item in enumerate(results['items']):
             track = item['name']

@@ -36,7 +36,7 @@ def sign_in(token):
 st.set_page_config(
     page_title = "Topify",
     page_icon='assets/Spotify_Icon_RGB_Green.png',
-    # layout="wide",
+    layout="centered",
     menu_items = {
         'Get Help' : 'https://docs.streamlit.io/',
         'About' : '# Developed by Julio Arroyo and Zeshan Khatri'
@@ -52,10 +52,8 @@ REDIRECT_URI = st.secrets['REDIRECT_URI']
 url_params = st.experimental_get_query_params()
 
 scope = "user-library-read user-top-read"
-state = generate_random_string(16)
 
 oauth = SpotifyOAuth(scope=scope,
-                     state=state,
                      redirect_uri=REDIRECT_URI,
                      client_id=CLIENT_ID,
                      client_secret=CLIENT_SECRET)

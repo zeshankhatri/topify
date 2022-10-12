@@ -89,7 +89,7 @@ else:
     link_html += "</style>"
     link_html += f" <a href=\"{auth_url}\" > <button> <span>Login to Spotify</span> </button> </a>"
 
-    if code not in url_params:
+    if "code" not in url_params:
         st.markdown(link_html, unsafe_allow_html=True)
     else:
         # Get user data

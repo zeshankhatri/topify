@@ -147,7 +147,7 @@ else:
             length
 
             # Get top artists during given term
-            results = st.session_state['user'].get_user_top_artists(
+            results = st.session_state['user'].current_user_top_artists(
                 limit=10,
                 time_range=term
             )

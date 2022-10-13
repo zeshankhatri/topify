@@ -64,8 +64,8 @@ auth_url = oauth.get_authorize_url()
 st.title("Topify")
 
 add_selectbox = st.sidebar.selectbox(
-    "Change Request:",
-    ["Top Tracks", "Top Artists", "Spotify's Available Markets"]
+    "What Would You Like to Know?",
+    ["Favorite Tracks and Artists", "Some Fun General Spotify Data"]
 )
 
 if add_selectbox == "Top Artists":
@@ -73,37 +73,38 @@ if add_selectbox == "Top Artists":
 elif add_selectbox == "Spotify's Available Markets":
     st.write("In progress")
 else:
-    # login = st.button("Login to Spotify")
-    #
-    # if login:
-    #     webbrowser.open_new_tab(auth_url)
-    link_html = "<style> "
-    link_html += " button { display: inline-block; background-color: #1db954; border-radius: 10px; border: 4px single #cccccc; color: #eeeeee;"
-    link_html += " text-align: center; font-size: 16px; padding: 10px; transition: all 0.5s; cursor: pointer; margin-bottom: 10px; }"
-    link_html += " button span { cursor: pointer; display: inline-block; position: relative; transition: 0.5s; }"
-    link_html += " button span:after { content: '>>'; position: absolute; opacity: 0; top: 0; right: -20px; transition: 0.5s; }"
-    link_html += " button:hover span { padding-right: 25px; }"
-    link_html += " button:hover span:after { opacity: 1; right: 0; }"
-    link_html += "</style>"
-    link_html += f" <a href=\"{auth_url}\" > <button> <span>Login to Spotify</span> </button> </a>"
-
     if "code" not in url_params:
+        # User did not grant authorization.
+        if "error" in url_params:
+            st.error("This app will not work without authorization! Please grant permission via the button below:")
+
+        # Login button using HTML for ability to incorporate authorization link
+        link_html = "<style> "
+        link_html += " button { display: inline-block; background-color: #1db954; border-radius: 10px; border: 4px single #cccccc; color: #eeeeee;"
+        link_html += " text-align: center; font-size: 16px; padding: 10px; transition: all 0.5s; cursor: pointer; margin-bottom: 10px; }"
+        link_html += " button span { cursor: pointer; display: inline-block; position: relative; transition: 0.5s; }"
+        link_html += " button span:after { content: '>>'; position: absolute; opacity: 0; top: 0; right: -20px; transition: 0.5s; }"
+        link_html += " button:hover span { padding-right: 25px; }"
+        link_html += " button:hover span:after { opacity: 1; right: 0; }"
+        link_html += "</style>"
+        link_html += f" <a href=\"{auth_url}\" > <button> <span>Login to Spotify</span> </button> </a>"
+
         st.markdown(link_html, unsafe_allow_html=True)
     else:
         # Get user data
         if 'user' not in st.session_state:
             code = url_params['code'][0]
             token = get_token(oauth, code)
-            st.session_state['user']= sign_in(token)
+            st.session_state['user'] = sign_in(token)
+            st.success("Sign in successful!")
 
         user = st.session_state['user'].current_user()
         name = user["display_name"]
         username = user["id"]
 
-        st.write("Current user is: {n}".format(n=name))
+        st.write("Hey, {n}!".format(n=name))
 
         # Display top tracks with artist
-        st.success("It works!")
         short_term = st.button("Short Term")
         long_term = st.button("Long Term")
 

@@ -142,7 +142,7 @@ else:
                     "Song": track,
                     "Artist": artist
                 },
-                index=[range(len(track))]
+                index=pd.RangeIndex(start=1, stop=len(tracks), step=1)
             )
             # Displaying the dataframe
             st.dataframe(show_tracks, use_container_width=True)

@@ -141,10 +141,11 @@ else:
                 {
                     "Song": track,
                     "Artist": artist
-                }
+                },
+                index=[range(len(track))]
             )
             # Displaying the dataframe
-            st.dataframe(show_tracks)
+            st.dataframe(show_tracks, use_container_width=True)
 
         with artists:
             st.write("Show top artists here")

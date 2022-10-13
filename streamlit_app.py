@@ -76,11 +76,8 @@ else:
         # Login button using HTML for ability to incorporate authorization link
         link_html = "<style> "
         link_html += " button { display: inline-block; background-color: #1db954; border-radius: 10px; border: 4px single #cccccc; color: #eeeeee;"
-        link_html += " text-align: center; font-size: 16px; padding: 10px; transition: all 0.5s; cursor: pointer; margin-bottom: 10px; }"
-        link_html += " button span { cursor: pointer; display: inline-block; position: relative; transition: 0.5s; }"
-        link_html += " button span:after { content: '>>'; position: absolute; opacity: 0; top: 0; right: -20px; transition: 0.5s; }"
-        link_html += " button:hover span { padding-right: 25px; }"
-        link_html += " button:hover span:after { opacity: 1; right: 0; }"
+        link_html += " text-align: center; font-size: 16px; padding: 10px; transition: all 0.5s; cursor: pointer; margin-bottom: 10px; transition: 0.5s; }"
+        link_html += " button:hover { cursor: pointer; padding: 15px; }"
         link_html += "</style>"
         link_html += f" <a href=\"{auth_url}\" > <button> <span>Login to Spotify</span> </button> </a>"
 

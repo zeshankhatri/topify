@@ -105,15 +105,15 @@ else:
 
         with tracks:
             # Radio button to select time range parameter for parsing data
-            length = st.radio(
+            t_length = st.radio(
                 "How far back would you like to go?",
                 ('Past Month', 'Past Six Months', 'All Time'),
                 horizontal=True
             )
 
-            if length == 'Past Month':
+            if t_length == 'Past Month':
                 term = 'short_term'
-            elif length == 'Past Six Months':
+            elif t_length == 'Past Six Months':
                 term = 'medium_term'
             else:
                 term = 'long_term'
@@ -144,7 +144,19 @@ else:
             st.dataframe(show_tracks, use_container_width=True)
 
         with artists:
-            length
+            # Radio button to select time range parameter for parsing data
+            a_length = st.radio(
+                "How far back would you like to go?",
+                ('Past Month', 'Past Six Months', 'All Time'),
+                horizontal=True
+            )
+
+            if a_length == 'Past Month':
+                term = 'short_term'
+            elif a_length == 'Past Six Months':
+                term = 'medium_term'
+            else:
+                term = 'long_term'
 
             # Get top artists during given term
             results = st.session_state['user'].current_user_top_artists(

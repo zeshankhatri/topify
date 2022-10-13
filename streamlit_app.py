@@ -68,16 +68,11 @@ add_selectbox = st.sidebar.selectbox(
     ["Favorite Tracks and Artists", "Some Fun General Spotify Data"]
 )
 
-if add_selectbox == "Top Artists":
-    st.write("In progress")
-elif add_selectbox == "Spotify's Available Markets":
+if add_selectbox == "Some Fun General Spotify Data":
     st.write("In progress")
 else:
     if "code" not in url_params:
-        # User did not grant authorization.
-        if "error" in url_params:
-            st.error("This app will not work without authorization! Please grant permission via the button below:")
-
+        st.subheader("Click the green button to view your top artists and tracks from Spotify!")
         # Login button using HTML for ability to incorporate authorization link
         link_html = "<style> "
         link_html += " button { display: inline-block; background-color: #1db954; border-radius: 10px; border: 4px single #cccccc; color: #eeeeee;"
@@ -90,29 +85,48 @@ else:
         link_html += f" <a href=\"{auth_url}\" > <button> <span>Login to Spotify</span> </button> </a>"
 
         st.markdown(link_html, unsafe_allow_html=True)
+
+        # User did not grant authorization.
+        if "error" in url_params:
+            st.error("This app will not work without authorization! Please grant permission via the button above.")
     else:
         # Get user data
         if 'user' not in st.session_state:
             code = url_params['code'][0]
             token = get_token(oauth, code)
             st.session_state['user'] = sign_in(token)
-            st.success("Sign in successful!")
+            st.success("Sign in successful.")
 
         user = st.session_state['user'].current_user()
         name = user["display_name"]
         username = user["id"]
 
-        st.write("Hey, {n}!".format(n=name))
+        st.subheader("Happy to see you, {n}!".format(n=name))
+        st.write("Use the options below to learn more about your music.")
 
-        # Display top tracks with artist
-        short_term = st.button("Short Term")
-        long_term = st.button("Long Term")
+        tracks, artists = st.tabs(["Your Top Tracks", "Your Top Artists"])
 
-        if short_term:
+        with tracks:
+            length = st.radio(
+                "How far back would you like to go?",
+                ('Past Month', 'Past Six Months', 'All Time'),
+                horizontal=True
+            )
+            # Display top tracks with artist
+            short_term = st.button("Short Term")
+            long_term = st.button("Long Term")
+
+            if length == 'Past Month':
+                term = 'short_term'
+            elif length == 'Past Six Months':
+                term = 'medium_term'
+            else:
+                term = 'long_term'
+
             # Get top tracks during given term
             results = st.session_state['user'].current_user_top_tracks(
                 limit=10,
-                time_range='short_term'
+                time_range=term
             )
 
             st.text(f"No.\tSong\t\t\t\t\t\tArtist")
@@ -120,15 +134,6 @@ else:
                 track = item['name']
                 artist = item['artists'][0]['name']
                 st.text("%i\t%-47s %-50s" % (idx + 1, track, artist))  # st.text used as st.write doesn't support \t
-        if long_term:
-            # Get top tracks during given term
-            results = st.session_state['user'].current_user_top_tracks(
-                limit=10,
-                time_range='long_term'
-            )
 
-            st.text(f"No.\tSong\t\t\t\t\t\tArtist")
-            for idx, item in enumerate(results['items']):
-                track = item['name']
-                artist = item['artists'][0]['name']
-                st.text("%i\t%-47s %-50s" % (idx + 1, track, artist))  # st.text used as st.write doesn't support \t
+        with artists:
+            st.write("Show top artists here")

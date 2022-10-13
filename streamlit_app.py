@@ -10,7 +10,7 @@ import requests
 import os
 
 
-# Generates state value
+# Generates state value (state parameter serves security purposes)
 def generate_random_string(length):
     characters = string.ascii_letters + string.digits + "_.-~"
     return ''.join(random.choice(characters) for i in range(length))
@@ -72,7 +72,7 @@ if add_selectbox == "Some Fun General Spotify Data":
     st.write("In progress")
 else:
     if "code" not in url_params:
-        st.subheader("Click the green button to view your top artists and tracks from Spotify!")
+        st.write("Click the green button to view your top artists and tracks from Spotify!")
         # Login button using HTML for ability to incorporate authorization link
         link_html = "<style> "
         link_html += " button { display: inline-block; background-color: #1db954; border-radius: 10px; border: 4px single #cccccc; color: #eeeeee;"
@@ -107,14 +107,12 @@ else:
         tracks, artists = st.tabs(["Your Top Tracks", "Your Top Artists"])
 
         with tracks:
+            # Radio button to select time range parameter for parsing data
             length = st.radio(
                 "How far back would you like to go?",
                 ('Past Month', 'Past Six Months', 'All Time'),
                 horizontal=True
             )
-            # Display top tracks with artist
-            short_term = st.button("Short Term")
-            long_term = st.button("Long Term")
 
             if length == 'Past Month':
                 term = 'short_term'
@@ -129,11 +127,24 @@ else:
                 time_range=term
             )
 
-            st.text(f"No.\tSong\t\t\t\t\t\tArtist")
+            # # Display top tracks
+            # st.text(f"No.\tSong\t\t\t\t\t\tArtist")
+            track = []
+            artist = []
+
             for idx, item in enumerate(results['items']):
-                track = item['name']
-                artist = item['artists'][0]['name']
-                st.text("%i\t%-47s %-50s" % (idx + 1, track, artist))  # st.text used as st.write doesn't support \t
+                track.insert(item['name'])
+                artist.insert(item['artists'][0]['name'])
+                # st.text("%i\t%-47s %-50s" % (idx + 1, track, artist))  # st.text used as st.write doesn't support \t
+
+            show_tracks = pd.DataFrame(
+                {
+                    "Song": track,
+                    "Artist": artist
+                }
+            )
+            # Displaying the dataframe
+            st.dataframe(show_tracks)
 
         with artists:
             st.write("Show top artists here")

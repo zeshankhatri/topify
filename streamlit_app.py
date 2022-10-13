@@ -133,8 +133,8 @@ else:
             artist = []
 
             for idx, item in enumerate(results['items']):
-                track.insert(item['name'])
-                artist.insert(item['artists'][0]['name'])
+                track.append(item['name'])
+                artist.append(item['artists'][0]['name'])
                 # st.text("%i\t%-47s %-50s" % (idx + 1, track, artist))  # st.text used as st.write doesn't support \t
 
             show_tracks = pd.DataFrame(

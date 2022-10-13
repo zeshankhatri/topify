@@ -16,6 +16,24 @@ def generate_random_string(length):
     return ''.join(random.choice(characters) for i in range(length))
 
 
+# Gets time range parameter
+def get_term():
+    # Radio button to select time range parameter for parsing data
+    length = st.radio(
+        "How far back would you like to go?",
+        ('Past Month', 'Past Six Months', 'All Time'),
+        horizontal=True
+    )
+
+    if length == 'Past Month':
+        t = 'short_term'
+    elif length == 'Past Six Months':
+        t = 'medium_term'
+    else:
+        t = 'long_term'
+
+    return t
+
 # Makes POST request to get authorization token
 def get_token(oauth, code):
     token = oauth.get_access_token(code, as_dict=False)
@@ -104,19 +122,7 @@ else:
         tracks, artists = st.tabs(["Your Top Tracks", "Your Top Artists"])
 
         with tracks:
-            # Radio button to select time range parameter for parsing data
-            length = st.radio(
-                "How far back would you like to go?",
-                ('Past Month', 'Past Six Months', 'All Time'),
-                horizontal=True
-            )
-
-            if length == 'Past Month':
-                term = 'short_term'
-            elif length == 'Past Six Months':
-                term = 'medium_term'
-            else:
-                term = 'long_term'
+            term = get_term()
 
             # Get top tracks during given term
             results = st.session_state['user'].current_user_top_tracks(
@@ -125,14 +131,12 @@ else:
             )
 
             # # Display top tracks
-            # st.text(f"No.\tSong\t\t\t\t\t\tArtist")
             track = []
             artist = []
 
-            for idx, item in enumerate(results['items']):
+            for item in results['items']:
                 track.append(item['name'])
                 artist.append(item['artists'][0]['name'])
-                # st.text("%i\t%-47s %-50s" % (idx + 1, track, artist))  # st.text used as st.write doesn't support \t
 
             show_tracks = pd.DataFrame(
                 {
@@ -141,8 +145,30 @@ else:
                 },
             )
             show_tracks.index += 1
+
             # Displaying the dataframe
             st.dataframe(show_tracks, use_container_width=True)
 
         with artists:
-            st.write("Show top artists here")
+            term = get_term()
+
+            # Get top artists during given term
+            results = st.session_state['user'].get_user_top_artists(
+                limit=10,
+                time_range=term
+            )
+
+            artist = []
+
+            for item in results['items']:
+                artist.append(item['name'])
+
+            show_artists = pd.DataFrame(
+                {
+                    "Artist": artist
+                },
+            )
+            show_artists.index += 1
+
+            # Displaying the dataframe
+            st.dataframe(show_artists, use_container_width=True)

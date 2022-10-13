@@ -96,7 +96,7 @@ else:
             token = get_token(oauth, code)
             st.session_state['user']= sign_in(token)
 
-        user = sp.current_user()
+        user = st.session_state['user'].current_user()
         name = user["display_name"]
         username = user["id"]
 

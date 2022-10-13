@@ -91,9 +91,10 @@ else:
         st.markdown(link_html, unsafe_allow_html=True)
     else:
         # Get user data
-        code = url_params['code'][0]
-        token = get_token(oauth, code)
-        sp = sign_in(token)
+        if 'user' not in st.session_state:
+            code = url_params['code'][0]
+            token = get_token(oauth, code)
+            st.session_state['user']= sign_in(token)
 
         user = sp.current_user()
         name = user["display_name"]
@@ -108,7 +109,7 @@ else:
 
         if short_term:
             # Get top tracks during given term
-            results = sp.current_user_top_tracks(
+            results = st.session_state['user'].current_user_top_tracks(
                 limit=10,
                 time_range='short_term'
             )
@@ -120,7 +121,7 @@ else:
                 st.text("%i\t%-47s %-50s" % (idx + 1, track, artist))  # st.text used as st.write doesn't support \t
         if long_term:
             # Get top tracks during given term
-            results = sp.current_user_top_tracks(
+            results = st.session_state['user'].current_user_top_tracks(
                 limit=10,
                 time_range='long_term'
             )

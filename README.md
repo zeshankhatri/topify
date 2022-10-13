@@ -4,7 +4,7 @@ Streamlit app to display given Spotify user's top artists or tracks during speci
 
 Link: https://share.streamlit.io/zeshankhatri/topify/master
 
-- [ ] 1. At least 1 interactive table (https://docs.streamlit.io/library/api-reference/data/st.dataframe (Links to an external site.))
+- [x] 1. At least 1 interactive table (https://docs.streamlit.io/library/api-reference/data/st.dataframe (Links to an external site.))
 - [ ] 2. At least 2 chart elements,  such as line, area or bar charts (matplotlib is allowed). To display:
   - [ ] a line chart - https://docs.streamlit.io/library/api-reference/charts/st.line_chart (Links to an external site.)
   - [ ] an area chart - https://docs.streamlit.io/library/api-reference/charts/st.area_chart (Links to an external site.)
@@ -14,7 +14,7 @@ Link: https://share.streamlit.io/zeshankhatri/topify/master
 - [x] 5. At least 1 checkbox widget (https://docs.streamlit.io/library/api-reference/widgets/st.checkbox)
 - [x] 6. At least 2 of the essential feedback and messages boxes to the users:
   - [x] Success box - https://docs.streamlit.io/library/api-reference/status/st.success (Links to an external site.) 
-  - [ ] Information box - https://docs.streamlit.io/library/api-reference/status/st.info (Links to an external site.) 
+  - [x] Information box - https://docs.streamlit.io/library/api-reference/status/st.info (Links to an external site.) 
   - [ ] Warning box - https://docs.streamlit.io/library/api-reference/status/st.warning (Links to an external site.) 
   - [x] Error box - https://docs.streamlit.io/library/api-reference/status/st.error (Links to an external site.) 
   - [ ] Exception message (optional) - https://docs.streamlit.io/library/api-reference/status/st.exception (Links to an external site.) 

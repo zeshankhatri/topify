@@ -89,7 +89,7 @@ if add_selectbox == "Some Fun General Spotify Data":
     st.write("In progress")
 else:
     if "code" not in url_params:
-        st.write("Click the green button to view your top artists and tracks from Spotify!")
+        st.info("Click the green button to view your top artists and tracks from Spotify!")
         # Login button using HTML for ability to incorporate authorization link
         link_html = "<style> "
         link_html += " button { display: inline-block; background-color: #1db954; border-radius: 10px; border: 4px single #cccccc; color: #eeeeee;"

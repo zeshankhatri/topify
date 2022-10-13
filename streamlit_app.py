@@ -16,24 +16,6 @@ def generate_random_string(length):
     return ''.join(random.choice(characters) for i in range(length))
 
 
-# Gets time range parameter
-def get_term():
-    # Radio button to select time range parameter for parsing data
-    length = st.radio(
-        "How far back would you like to go?",
-        ('Past Month', 'Past Six Months', 'All Time'),
-        horizontal=True
-    )
-
-    if length == 'Past Month':
-        t = 'short_term'
-    elif length == 'Past Six Months':
-        t = 'medium_term'
-    else:
-        t = 'long_term'
-
-    return t
-
 # Makes POST request to get authorization token
 def get_token(oauth, code):
     token = oauth.get_access_token(code, as_dict=False)
@@ -122,7 +104,19 @@ else:
         tracks, artists = st.tabs(["Your Top Tracks", "Your Top Artists"])
 
         with tracks:
-            term = get_term()
+            # Radio button to select time range parameter for parsing data
+            length = st.radio(
+                "How far back would you like to go?",
+                ('Past Month', 'Past Six Months', 'All Time'),
+                horizontal=True
+            )
+
+            if length == 'Past Month':
+                term = 'short_term'
+            elif length == 'Past Six Months':
+                term = 'medium_term'
+            else:
+                term = 'long_term'
 
             # Get top tracks during given term
             results = st.session_state['user'].current_user_top_tracks(
@@ -150,7 +144,7 @@ else:
             st.dataframe(show_tracks, use_container_width=True)
 
         with artists:
-            term = get_term()
+            length
 
             # Get top artists during given term
             results = st.session_state['user'].get_user_top_artists(

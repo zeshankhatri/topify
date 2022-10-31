@@ -9,7 +9,7 @@ Link: https://topify.streamlitapp.com/
   - [ ] a line chart - https://docs.streamlit.io/library/api-reference/charts/st.line_chart (Links to an external site.)
   - [ ] an area chart - https://docs.streamlit.io/library/api-reference/charts/st.area_chart (Links to an external site.)
   - [ ] a bar chart - https://docs.streamlit.io/library/api-reference/charts/st.bar_chart (Links to an external site.)
-- [ ] 3. At least 1 map with points marked on it (a simple map can be created using https://docs.streamlit.io/library/api-reference/charts/st.map (Links to an external site.) or a more complex 3d map at https://docs.streamlit.io/library/api-reference/charts/st.pydeck_chart (Links to an external site.))
+- [x] 3. At least 1 map with points marked on it (a simple map can be created using https://docs.streamlit.io/library/api-reference/charts/st.map (Links to an external site.) or a more complex 3d map at https://docs.streamlit.io/library/api-reference/charts/st.pydeck_chart (Links to an external site.))
 - [x] 4. At least 1 button widget (https://docs.streamlit.io/library/api-reference/widgets/st.button)
 - [x] 5. At least 1 checkbox widget (https://docs.streamlit.io/library/api-reference/widgets/st.checkbox)
 - [x] 6. At least 2 of the essential feedback and messages boxes to the users:

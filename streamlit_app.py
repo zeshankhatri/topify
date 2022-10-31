@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
+from spotipy.cache_handler import MemoryCacheHandler
 import random, string
 import requests
 import os
@@ -88,7 +89,7 @@ add_selectbox = st.sidebar.selectbox(
 )
 
 if add_selectbox == "Some Fun General Spotify Data":
-    auth_manager = SpotifyClientCredentials()
+    auth_manager = SpotifyClientCredentials(cache_handler=MemoryCacheHandler())
     sp = spotipy.Spotify(auth_manager=auth_manager)
 
     markets = sp.available_markets()

@@ -4,7 +4,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 import random, string
 import requests
 import os
@@ -33,6 +33,8 @@ def get_term(key):
         t = 'long_term'
 
     return t
+
+
 # Makes POST request to get authorization token
 def get_token(oauth, code):
     token = oauth.get_access_token(code, as_dict=False)
@@ -61,8 +63,8 @@ st.set_page_config(
 )
 
 # Establishes request parameters from Streamlit secrets
-CLIENT_ID = st.secrets['CLIENT_ID']
-CLIENT_SECRET = st.secrets['CLIENT_SECRET']
+SPOTIPY_CLIENT_ID = st.secrets['SPOTIPY_CLIENT_ID']
+SPOTIPY_CLIENT_SECRET = st.secrets['SPOTIPY_CLIENT_SECRET']
 REDIRECT_URI = st.secrets['REDIRECT_URI']
 
 # Gets URL parameters following authentication
@@ -72,8 +74,8 @@ scope = "user-library-read user-top-read"
 
 oauth = SpotifyOAuth(scope=scope,
                      redirect_uri=REDIRECT_URI,
-                     client_id=CLIENT_ID,
-                     client_secret=CLIENT_SECRET)
+                     client_id=SPOTIPY_CLIENT_ID,
+                     client_secret=SPOTIPY_CLIENT_SECRET)
 
 # /authorize
 auth_url = oauth.get_authorize_url()
@@ -86,7 +88,28 @@ add_selectbox = st.sidebar.selectbox(
 )
 
 if add_selectbox == "Some Fun General Spotify Data":
-    st.write("In progress")
+    auth_manager = SpotifyClientCredentials()
+    sp = spotipy.Spotify(auth_manager=auth_manager)
+
+    markets = sp.available_markets()
+    markets = markets['markets']
+    df = pd.read_csv('assets/country_capitals.csv')
+
+    latitudes = []
+    longitudes = []
+
+    for i, code in enumerate(df['CountryCode']):
+        if code in markets:
+            latitudes.append(df['CapitalLatitude'][i])
+            longitudes.append(df['CapitalLongitude'][i])
+
+    locations = pd.DataFrame({
+         'latitude': latitudes,
+         'longitude': longitudes
+    })
+
+    st.map(locations)
+    st.caption('Countries (Markets) where Spotify is available.')
 else:
     if "code" not in url_params:
         st.info("Click the green button to view your top artists and tracks from Spotify!")
@@ -116,7 +139,7 @@ else:
         username = user["id"]
 
         st.subheader("Happy to see you, {n}!".format(n=name))
-        st.write("Use the options below to learn more about your music.")
+        st.write("Let's see your music taste by using the options below:")
 
         tracks, artists = st.tabs(["Your Top Tracks", "Your Top Artists"])
 
@@ -141,7 +164,7 @@ else:
                 {
                     "Song": track,
                     "Artist": artist
-                },
+                }
             )
             show_tracks.index += 1
 

@@ -38,7 +38,7 @@ def get_term(key):
 
 def get_limit(key):
     # Show max limit tracks
-    show_all = st.checkbox('Show All', key=key)
+    show_all = st.checkbox('Show All', key=key+'1') #to avoid duplicate keys
 
     if show_all:
         limit = st.slider(
@@ -58,7 +58,7 @@ def get_limit(key):
             max_value=50,
             value=10,
             step=1,
-            key=key+' ' #to avoid duplicate keys
+            key=key
         )
 
     return limit

@@ -36,6 +36,19 @@ def get_term(key):
     return t
 
 
+def get_limit(key):
+    limit = st.slider(
+        "Show top:",
+        min_value=5,
+        max_value=50,
+        value=10,
+        step=1,
+        key=key
+    )
+
+    return limit
+
+
 # Makes POST request to get authorization token
 def get_token(oauth, code):
     token = oauth.get_access_token(code, as_dict=False)
@@ -71,8 +84,10 @@ REDIRECT_URI = st.secrets['REDIRECT_URI']
 # Gets URL parameters following authentication
 url_params = st.experimental_get_query_params()
 
+# Specify scope
 scope = "user-library-read user-top-read"
 
+# Specify Authorization Code Flow parameters
 oauth = SpotifyOAuth(scope=scope,
                      redirect_uri=REDIRECT_URI,
                      client_id=SPOTIPY_CLIENT_ID,
@@ -89,9 +104,13 @@ add_selectbox = st.sidebar.selectbox(
 )
 
 if add_selectbox == "Some Fun General Spotify Data":
+    st.subheader("Map and Graphs")
+
+    # Client Credentials Authorization
     auth_manager = SpotifyClientCredentials(cache_handler=MemoryCacheHandler())
     sp = spotipy.Spotify(auth_manager=auth_manager)
 
+    # Gets available markets country code and loads data file of capitals
     markets = sp.available_markets()
     markets = markets['markets']
     df = pd.read_csv('assets/country_capitals.csv')
@@ -99,18 +118,21 @@ if add_selectbox == "Some Fun General Spotify Data":
     latitudes = []
     longitudes = []
 
+    # For all merket country codes, get latitude and longitude of capital
     for i, code in enumerate(df['CountryCode']):
         if code in markets:
             latitudes.append(df['CapitalLatitude'][i])
             longitudes.append(df['CapitalLongitude'][i])
 
+    # Map of available markets by capital
     locations = pd.DataFrame({
          'latitude': latitudes,
          'longitude': longitudes
     })
 
+    st.write("Spotify's Available Markets:")
     st.map(locations)
-    st.caption('Countries (Markets) where Spotify is available.')
+    st.caption('Countries (Markets) marked according to capital.')
 else:
     if "code" not in url_params:
         st.info("Click the green button to view your top artists and tracks from Spotify!")
@@ -128,7 +150,7 @@ else:
         if "error" in url_params:
             st.error("This app will not work without authorization! Please grant permission via the button above.")
     else:
-        # Get user data
+        # Get user data (Authorization Code Flow)
         if 'user' not in st.session_state:
             code = url_params['code'][0]
             token = get_token(oauth, code)
@@ -146,10 +168,11 @@ else:
 
         with tracks:
             term = get_term('t_length')
+            limit = get_limit('t_limit')
 
             # Get top tracks during given term
             results = st.session_state['user'].current_user_top_tracks(
-                limit=10,
+                limit=limit,
                 time_range=term
             )
 
@@ -174,10 +197,11 @@ else:
 
         with artists:
             term = get_term('a_length')
+            limit = get_limit('a_limit')
 
             # Get top artists during given term
             results = st.session_state['user'].current_user_top_artists(
-                limit=10,
+                limit=limit,
                 time_range=term
             )
 

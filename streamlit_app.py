@@ -41,7 +41,7 @@ def get_limit(key):
         "Show top:",
         min_value=5,
         max_value=50,
-        value=10,
+        value=15,
         step=1,
         key=key
     )
@@ -104,6 +104,11 @@ add_selectbox = st.sidebar.selectbox(
 )
 
 if add_selectbox == "Some Fun General Spotify Data":
+    # See Spotify's official colors
+    st.subheader("Spotify's Official Colors")
+    st.info("Enter the corresponding color Hex value below to view it!")
+    st.write("Green: #1D8954, White: #FFFFFF, Black: #191414")
+    st.color_picker('Random Label', '#1D8954', label_visibility='collapsed')
     st.subheader("Map and Graphs")
 
     # Client Credentials Authorization

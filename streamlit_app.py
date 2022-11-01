@@ -37,14 +37,29 @@ def get_term(key):
 
 
 def get_limit(key):
-    limit = st.slider(
-        "Show top:",
-        min_value=5,
-        max_value=50,
-        value=15,
-        step=1,
-        key=key
-    )
+    # Show max limit tracks
+    show_all = st.checkbox('Show All', key=key)
+
+    if show_all:
+        limit = st.slider(
+            "Show top:",
+            min_value=5,
+            max_value=50,
+            value=10,
+            step=1,
+            key=key,
+            disabled=True
+        )
+        limit=50
+    else:
+        limit = st.slider(
+            "Show top:",
+            min_value=5,
+            max_value=50,
+            value=10,
+            step=1,
+            key=key+' ' #to avoid duplicate keys
+        )
 
     return limit
 
@@ -106,7 +121,7 @@ add_selectbox = st.sidebar.selectbox(
 if add_selectbox == "Some Fun General Spotify Data":
     # See Spotify's official colors
     st.subheader("Spotify's Official Colors")
-    st.info("Enter the corresponding color Hex value below to view it!")
+    st.info("Enter the corresponding color value below to view it!")
     st.write("Green: #1D8954, White: #FFFFFF, Black: #191414")
     st.color_picker('Random Label', '#1D8954', label_visibility='collapsed')
     st.subheader("Map and Graphs")

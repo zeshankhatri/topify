@@ -22,7 +22,7 @@ Link: https://topify.streamlitapp.com/
   - [x] Radio button - https://docs.streamlit.io/library/api-reference/widgets/st.radio (Links to an external site.) 
   - [x] Selectbox - https://docs.streamlit.io/library/api-reference/widgets/st.selectbox (Links to an external site.) 
   - [ ] Multiselect - https://docs.streamlit.io/library/api-reference/widgets/st.multiselect (Links to an external site.) 
-  - [ ] Slider - https://docs.streamlit.io/library/api-reference/widgets/st.slider (Links to an external site.) 
+  - [x] Slider - https://docs.streamlit.io/library/api-reference/widgets/st.slider (Links to an external site.) 
   - [ ] Select-slider - https://docs.streamlit.io/library/api-reference/widgets/st.select_slider (Links to an external site.) 
   - [ ] Text input - https://docs.streamlit.io/library/api-reference/widgets/st.text_input (Links to an external site.) 
   - [ ] Number input - https://docs.streamlit.io/library/api-reference/widgets/st.number_input (Links to an external site.) 

@@ -267,7 +267,7 @@ else:
             # Sort genres based on how many top artists are part of genre
             sorted_genres = sorted(count_genres.items(), key=lambda x: x[1], reverse=True)
             count_genres = dict(sorted_genres)
-            genres = count_genres.keys()
+            genres = list(count_genres.keys())
 
             # Display top genres
             limit = get_limit('g_limit')

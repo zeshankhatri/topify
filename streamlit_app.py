@@ -289,6 +289,11 @@ else:
                             supplies the genre(s) of each artist. Based on that, the following graph showcases which genre 
                             appeared the most in all your top artists:''')
 
-                bar_chart = pd.DataFrame(count_genres, index=genres)
+                counts = list(count_genres.values())
 
-                st.bar_chart(bar_chart)
+                bar_chart = pd.DataFrame({
+                    "Genre": genres[:limit],
+                    "Instances": counts[:limit]
+                })
+
+                st.bar_chart(bar_chart, x='Genre', y="Instances")

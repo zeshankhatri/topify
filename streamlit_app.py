@@ -1,5 +1,3 @@
-import webbrowser
-
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -7,7 +5,6 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 from spotipy.cache_handler import MemoryCacheHandler
 import random, string
-import requests
 import os
 
 
@@ -17,18 +14,35 @@ def generate_random_string(length):
     return ''.join(random.choice(characters) for i in range(length))
 
 
+# Makes POST request to get authorization token
+def get_token(oauth, code):
+    token = oauth.get_access_token(code, as_dict=False)
+    # remove cached token saved in directory
+    os.remove(".cache")
+
+    # return the token
+    return token
+
+
+# Uses token to get user data according to scope
+def sign_in(token):
+    sp = spotipy.Spotify(auth=token)
+    return sp
+
+
+# Specifies which time period to get data for
 def get_term(key):
     # Radio button to select time range parameter for parsing data
-    length = st.radio(
+    term = st.radio(
         "How far back would you like to go?",
         ('Past Month', 'Past Six Months', 'All Time'),
         horizontal=True,
         key=key
     )
 
-    if length == 'Past Month':
+    if term == 'Past Month':
         t = 'short_term'
-    elif length == 'Past Six Months':
+    elif term == 'Past Six Months':
         t = 'medium_term'
     else:
         t = 'long_term'
@@ -36,6 +50,7 @@ def get_term(key):
     return t
 
 
+# Specifies the amount of items to list
 def get_limit(key):
     # Show max limit tracks
     show_all = st.checkbox('Show All', key=key+'1') #to avoid duplicate keys
@@ -64,20 +79,21 @@ def get_limit(key):
     return limit
 
 
-# Makes POST request to get authorization token
-def get_token(oauth, code):
-    token = oauth.get_access_token(code, as_dict=False)
-    # remove cached token saved in directory
-    os.remove(".cache")
+def get_top_items(item, term, limit):
+    if item == 'tracks':
+        # Get top tracks during given term up to specified limit (max 50)
+        res = st.session_state['user'].current_user_top_tracks(
+            limit=limit,
+            time_range=term
+        )
+    else:
+        # Get top artists during given term up to specified limit (max 50)
+        res = st.session_state['user'].current_user_top_artists(
+            limit=limit,
+            time_range=term
+        )
 
-    # return the token
-    return token
-
-
-# Uses token to get user data according to scope
-def sign_in(token):
-    sp = spotipy.Spotify(auth=token)
-    return sp
+    return res
 
 
 # Page configuration
@@ -121,7 +137,7 @@ add_selectbox = st.sidebar.selectbox(
 if add_selectbox == "Some Fun General Spotify Data":
     # See Spotify's official colors
     st.subheader("Spotify's Official Colors")
-    st.info("Enter the corresponding color value below to view it!")
+    st.info("Enter the corresponding value to view the color!")
     st.write("Green: #1D8954, White: #FFFFFF, Black: #191414")
     st.color_picker('Random Label', '#1D8954', label_visibility='collapsed')
     st.subheader("Map and Graphs")
@@ -184,17 +200,14 @@ else:
         st.subheader("Happy to see you, {n}!".format(n=name))
         st.write("Let's see your music taste by using the options below:")
 
-        tracks, artists = st.tabs(["Your Top Tracks", "Your Top Artists"])
+        tracks, artists, genres = st.tabs(["Your Top Tracks", "Your Top Artists", "Your Top Genres"])
 
         with tracks:
-            term = get_term('t_length')
+            term = get_term('t_term')
             limit = get_limit('t_limit')
 
             # Get top tracks during given term
-            results = st.session_state['user'].current_user_top_tracks(
-                limit=limit,
-                time_range=term
-            )
+            results = get_top_items('tracks', term, limit)
 
             # # Display top tracks
             track = []
@@ -216,15 +229,13 @@ else:
             st.dataframe(show_tracks, use_container_width=True)
 
         with artists:
-            term = get_term('a_length')
+            term = get_term('a_term')
             limit = get_limit('a_limit')
 
             # Get top artists during given term
-            results = st.session_state['user'].current_user_top_artists(
-                limit=limit,
-                time_range=term
-            )
+            get_top_items('artists', term, limit)
 
+            # Display top artists
             artist = []
 
             for item in results['items']:
@@ -239,3 +250,32 @@ else:
 
             # Displaying the dataframe
             st.dataframe(show_artists, use_container_width=True)
+
+        with genres:
+            # Top artists data used to determine top genres
+            term = get_term('g_term')
+            get_top_items('artists', term, 50) # gets max num of entries
+
+            # Get genres through top artists data
+            count_genres = {}
+
+            for item in results['items']:
+                for genre in item['genres']:
+                    count_genres[genre] = count_genres.get(genres, 0) + 1
+
+            # Sort genres based on how many top artists are part of genre
+            sorted_genres = sorted(count_genres, key=lambda x: x[1], reverse=True)
+            count_genres = dict(sorted_genres)
+            genres = count_genres.keys()
+
+            # Display top genres
+            show_genres = pd.DataFrame(
+                {
+                    "Genre": genres
+                },
+            )
+            show_genres.index += 1
+
+            # Displaying the dataframe
+            st.dataframe(show_genres, use_container_width=True)
+

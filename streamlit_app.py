@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import altair as alt
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 from spotipy.cache_handler import MemoryCacheHandler
@@ -284,6 +285,7 @@ else:
 
             genre_data = st.checkbox('Learn genre data taking process.')
 
+            # Chart used to explain how genres were found
             if genre_data:
                 st.info('''Unlike top tracks and artists, Spotify doesn't provide top genre data. However, top artist data
                             supplies the genre(s) of each artist. Based on that, the following graph showcases which genre 
@@ -292,8 +294,12 @@ else:
                 counts = list(count_genres.values())
 
                 bar_chart = pd.DataFrame({
-                    "Genre": genres[:limit],
-                    "Instances": counts[:limit]
+                    "Genre": genres,
+                    "Instances": counts
                 })
 
-                st.bar_chart(bar_chart, x='Genre', y="Instances")
+                # Altair chart used for customization
+                bar_chart = alt.Chart(bar_chart).mark_bar().encode(
+                    x='Genre', y='Instances', color=alt.value('#1D8954'))
+
+                st.altair_chart(bar_chart, use_container_width=True)

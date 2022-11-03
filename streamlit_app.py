@@ -254,7 +254,7 @@ else:
         with genres:
             # Top artists data used to determine top genres
             term = get_term('g_term')
-            get_top_items('artists', term, 50) # gets max num of entries
+            results = get_top_items('artists', term, 50) # gets max num of entries
 
             # Get genres through top artists data
             count_genres = {}

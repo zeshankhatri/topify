@@ -262,7 +262,8 @@ else:
 
             for item in results['items']:
                 for genre in item['genres']:
-                    count_genres[genre] = count_genres.get(string.capwords(genre), 0) + 1
+                    genre = string.capwords(genre)
+                    count_genres[genre] = count_genres.get(genre, 0) + 1
 
             # Sort genres based on how many top artists are part of genre
             sorted_genres = sorted(count_genres.items(), key=lambda x: x[1], reverse=True)

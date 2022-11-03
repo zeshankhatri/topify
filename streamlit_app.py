@@ -291,4 +291,4 @@ else:
 
                 bar_chart = pd.DataFrame(count_genres, index=genres)
 
-                st.bar_chart(bar_chart, "Genres", "Instances")
+                st.bar_chart(bar_chart, x="Genres", y="Instances")

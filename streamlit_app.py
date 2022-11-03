@@ -233,7 +233,7 @@ else:
             limit = get_limit('a_limit')
 
             # Get top artists during given term
-            get_top_items('artists', term, limit)
+            results = get_top_items('artists', term, limit)
 
             # Display top artists
             artist = []
@@ -254,6 +254,7 @@ else:
         with genres:
             # Top artists data used to determine top genres
             term = get_term('g_term')
+
             results = get_top_items('artists', term, 50) # gets max num of entries
 
             # Get genres through top artists data
@@ -261,7 +262,7 @@ else:
 
             for item in results['items']:
                 for genre in item['genres']:
-                    count_genres[genre] = count_genres.get(genres, 0) + 1
+                    count_genres[genre] = count_genres.get(string.capwords(genre), 0) + 1
 
             # Sort genres based on how many top artists are part of genre
             sorted_genres = sorted(count_genres.items(), key=lambda x: x[1], reverse=True)
@@ -269,9 +270,10 @@ else:
             genres = count_genres.keys()
 
             # Display top genres
+            limit = get_limit('g_limit')
             show_genres = pd.DataFrame(
                 {
-                    "Genre": genres
+                    "Genre": genres[:limit]
                 },
             )
             show_genres.index += 1

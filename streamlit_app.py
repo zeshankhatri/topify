@@ -282,3 +282,13 @@ else:
             # Displaying the dataframe
             st.dataframe(show_genres, use_container_width=True)
 
+            genre_data = st.checkbox('Learn genre data taking process.')
+
+            if genre_data:
+                st.info('''Unlike top tracks and artists, Spotify doesn't provide top genre data. However, top artist data
+                            supplies the genre(s) of each artist. Based on that, the following graph showcases which genre 
+                            appeared the most in all your top artists:''')
+
+                bar_chart = pd.DataFrame(count_genres)
+
+                st.bar_chart(bar_chart, "Genres", "Instances")

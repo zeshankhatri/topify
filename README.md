@@ -5,10 +5,10 @@ Streamlit app to display given Spotify user's top artists or tracks during speci
 Link: https://topify.streamlitapp.com/
 
 - [x] 1. At least 1 interactive table (https://docs.streamlit.io/library/api-reference/data/st.dataframe (Links to an external site.))
-- [ ] 2. At least 2 chart elements,  such as line, area or bar charts (matplotlib is allowed). To display:
+- [x] 2. At least 1 chart element,  such as line, area or bar charts (matplotlib is allowed). To display:
   - [ ] a line chart - https://docs.streamlit.io/library/api-reference/charts/st.line_chart (Links to an external site.)
   - [ ] an area chart - https://docs.streamlit.io/library/api-reference/charts/st.area_chart (Links to an external site.)
-  - [ ] a bar chart - https://docs.streamlit.io/library/api-reference/charts/st.bar_chart (Links to an external site.)
+  - [x] a bar chart - https://docs.streamlit.io/library/api-reference/charts/st.bar_chart (Links to an external site.)
 - [x] 3. At least 1 map with points marked on it (a simple map can be created using https://docs.streamlit.io/library/api-reference/charts/st.map (Links to an external site.) or a more complex 3d map at https://docs.streamlit.io/library/api-reference/charts/st.pydeck_chart (Links to an external site.))
 - [x] 4. At least 1 button widget (https://docs.streamlit.io/library/api-reference/widgets/st.button)
 - [x] 5. At least 1 checkbox widget (https://docs.streamlit.io/library/api-reference/widgets/st.checkbox)
@@ -33,4 +33,4 @@ Link: https://topify.streamlitapp.com/
   - [x] Color - https://docs.streamlit.io/library/api-reference/widgets/st.color_picker (Links to an external site.) 
 ## BONUS
 - [ ] You may include a progress bar for certain components of your application; however, this is not mandatory
-- [ ] You may include media elements such as image, audio or video, which are not a requirement but can add to the overall harmony of the web application being developed
+- [x] You may include media elements such as image, audio or video, which are not a requirement but can add to the overall harmony of the web application being developed

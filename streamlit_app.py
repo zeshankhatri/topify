@@ -300,6 +300,6 @@ else:
 
                 # Altair chart used for customization
                 bar_chart = alt.Chart(bar_chart).mark_bar().encode(
-                    x='Genre', y='Instances', color=alt.value('#1D8954'))
+                    x=alt.X('Genre', axis=alt.Axis(labelAngle=-45)), y='Instances', color=alt.value('#1D8954'))
 
                 st.altair_chart(bar_chart, use_container_width=True)
